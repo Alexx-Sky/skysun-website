@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skysun - Люксовые автомобили</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes roadLines {
+            0% {
+                transform: translateX(100px);
+            }
+            100% {
+                transform: translateX(-100px);
+            }
+        }
+        @keyframes speedLine {
+            from {
+                opacity: 1;
+                width: 100px;
+            }
+            to {
+                opacity: 0;
+                width: 300px;
+            }
+        }
+        .road-line {
+            animation: roadLines 3s linear infinite;
+        }
+        .speed-line {
+            animation: speedLine 0.5s ease-out;
+        }
+        body {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 border-b border-amber-900/20">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold tracking-widest">
+                <span class="text-amber-500">SKY</span>SUN
+            </div>
+            <div class="flex gap-8">
+                <a href="#services" class="hover:text-amber-400 transition-colors text-sm uppercase tracking-widest">Услуги</a>
+                <a href="#gallery" class="hover:text-amber-400 transition-colors text-sm uppercase tracking-widest">Парк</a>
+                <a href="#contact" class="hover:text-amber-400 transition-colors text-sm uppercase tracking-widest">Контакт</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Animated Car -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-gradient-to-b from-gray-900 via-black to-black">
+        <div class="absolute inset-0 bg-gradient-to-b from-amber-900/10 via-black to-black"></div>
+        
+        <div class="absolute top-1/2 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-0 left-1/4 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s"></div>
+
+        <div class="relative z-10 w-full">
+            <!-- Text Section -->
+            <div class="text-center max-w-3xl mx-auto px-6 mb-20">
+                <h1 class="text-7xl md:text-8xl font-bold mb-6 tracking-tighter">
+                    МАСТЕРСТВО
+                    <br />
+                    <span class="text-amber-500">НА ДОРОГЕ</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 font-light tracking-wide">
+                    Эксклюзивные люксовые автомобили и премиум услуги для требовательных клиентов
+                </p>
+                <a href="#services" class="inline-block border-2 border-amber-500 text-amber-500 px-10 py-4 text-lg uppercase tracking-widest hover:bg-amber-500 hover:text-black transition-all duration-300">
+                    Узнать больше
+                </a>
+            </div>
+
+            <!-- Road and Animated Car -->
+            <div class="relative w-full h-96 flex items-center justify-start overflow-hidden">
+                <!-- Road -->
+                <div class="absolute inset-0 flex flex-col justify-center">
+                    <div class="h-2 bg-gray-600 relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-50"></div>
+                    </div>
+                    <div class="h-1 bg-gray-700 mt-2"></div>
+                    <div class="h-1 bg-gray-700 mt-2"></div>
+                    <div class="h-1 bg-gray-700 mt-2"></div>
+                    
+                    <!-- Road lines animation -->
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="h-1 bg-amber-500/30 mx-8 flex-shrink-0 road-line" style="width: 60px; animation-delay: 0s;"></div>
+                        <div class="h-1 bg-amber-500/30 mx-8 flex-shrink-0 road-line" style="width: 60px; animation-delay: -0.15s;"></div>
+                        <div class="h-1 bg-amber-500/30 mx-8 flex-shrink-0 road-line" style="width: 60px; animation-delay: -0.3s;"></div>
+                        <div class="h-1 bg-amber-500/30 mx-8 flex-shrink-0 road-line" style="width: 60px; animation-delay: -0.45s;"></div>
+                        <div class="h-1 bg-amber-500/30 mx-8 flex-shrink-0 road-line" style="width: 60px; animation-delay: -0.6s;"></div>
+                    </div>
+                </div>
+
+                <!-- Animated Car -->
+                <div id="car" class="absolute z-20 transition-all duration-300" style="top: 50%; transform: translateY(-50%);">
+                    <div class="text-9xl animate-bounce" style="animation-duration: 2s;">🏎️</div>
+                    <div class="absolute -bottom-8 left-0 right-0 w-24 h-4 bg-black/30 blur-lg mx-auto"></div>
+                </div>
+
+                <!-- Speed lines -->
+                <div id="speedLines" class="absolute left-0 top-0 w-full h-full pointer-events-none"></div>
+            </div>
+
+            <div class="mt-16 flex justify-center">
+                <svg class="w-8 h-8 text-amber-500 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500 to-transparent"></div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 px-6 bg-gradient-to-b from-black via-black to-black/95">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl md:text-6xl font-bold mb-4 text-center tracking-tight">
+                НАШ<span class="text-amber-500"> ПРОФИЛЬ</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-20 text-lg">
+                Полный спектр услуг для люксовых автомобилей
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="group p-8 border border-amber-900/30 hover:border-amber-500 transition-all duration-300 cursor-pointer hover:bg-amber-500/5">
+                    <div class="text-5xl mb-4">🏎️</div>
+                    <h3 class="text-xl font-bold mb-3 tracking-wide">Продажа</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Эксклюзивные люксовые автомобили из лучших мировых коллекций</p>
+                </div>
+
+                <div class="group p-8 border border-amber-900/30 hover:border-amber-500 transition-all duration-300 cursor-pointer hover:bg-amber-500/5">
+                    <div class="text-5xl mb-4">👤</div>
+                    <h3 class="text-xl font-bold mb-3 tracking-wide">Консультация</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Профессиональное сопровождение при выборе идеального автомобиля</p>
+                </div>
+
+                <div class="group p-8 border border-amber-900/30 hover:border-amber-500 transition-all duration-300 cursor-pointer hover:bg-amber-500/5">
+                    <div class="text-5xl mb-4">🔧</div>
+                    <h3 class="text-xl font-bold mb-3 tracking-wide">Техническое обслуживание</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Специализированный сервис для вашего люксового авто</p>
+                </div>
+
+                <div class="group p-8 border border-amber-900/30 hover:border-amber-500 transition-all duration-300 cursor-pointer hover:bg-amber-500/5">
+                    <div class="text-5xl mb-4">✨</div>
+                    <h3 class="text-xl font-bold mb-3 tracking-wide">Детейлинг</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Премиум уход и реставрация лакокрасочного покрытия</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-24 px-6 bg-black">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl md:text-6xl font-bold mb-4 text-center tracking-tight">
+                НАША<span class="text-amber-500"> КОЛЛЕКЦИЯ</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-20 text-lg">
+                Тщательно отобранные люксовые автомобили
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="group relative overflow-hidden border border-amber-900/30 hover:border-amber-500 transition-all duration-300">
+                    <div class="w-full h-64 bg-gradient-to-br from-amber-900/20 to-black flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="text-6xl opacity-50 group-hover:scale-110 transition-transform duration-300">🏎️</div>
+                    </div>
+                    <div class="p-6 bg-black/50 backdrop-blur-sm">
+                        <h3 class="text-lg font-bold tracking-wide mb-2">Ferrari 812 Superfast</h3>
+                        <p class="text-amber-500 text-sm mb-3">2023</p>
+                        <p class="text-gray-400 text-sm">Максимум мощности и скорости</p>
+                        <button class="mt-4 text-amber-500 text-sm uppercase tracking-widest hover:text-amber-400 transition-colors">Подробнее →</button>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden border border-amber-900/30 hover:border-amber-500 transition-all duration-300">
+                    <div class="w-full h-64 bg-gradient-to-br from-amber-900/20 to-black flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="text-6xl opacity-50 group-hover:scale-110 transition-transform duration-300">🏎️</div>
+                    </div>
+                    <div class="p-6 bg-black/50 backdrop-blur-sm">
+                        <h3 class="text-lg font-bold tracking-wide mb-2">Rolls-Royce Ghost</h3>
+                        <p class="text-amber-500 text-sm mb-3">2023</p>
+                        <p class="text-gray-400 text-sm">Вершина комфорта и роскоши</p>
+                        <button class="mt-4 text-amber-500 text-sm uppercase tracking-widest hover:text-amber-400 transition-colors">Подробнее →</button>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden border border-amber-900/30 hover:border-amber-500 transition-all duration-300">
+                    <div class="w-full h-64 bg-gradient-to-br from-amber-900/20 to-black flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="text-6xl opacity-50 group-hover:scale-110 transition-transform duration-300">🏎️</div>
+                    </div>
+                    <div class="p-6 bg-black/50 backdrop-blur-sm">
+                        <h3 class="text-lg font-bold tracking-wide mb-2">Lamborghini Revuelto</h3>
+                        <p class="text-amber-500 text-sm mb-3">2024</p>
+                        <p class="text-gray-400 text-sm">Революционный гибридный спорткар</p>
+                        <button class="mt-4 text-amber-500 text-sm uppercase tracking-widest hover:text-amber-400 transition-colors">Подробнее →</button>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden border border-amber-900/30 hover:border-amber-500 transition-all duration-300">
+                    <div class="w-full h-64 bg-gradient-to-br from-amber-900/20 to-black flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="text-6xl opacity-50 group-hover:scale-110 transition-transform duration-300">🏎️</div>
+                    </div>
+                    <div class="p-6 bg-black/50 backdrop-blur-sm">
+                        <h3 class="text-lg font-bold tracking-wide mb-2">Mercedes-AMG G63</h3>
+                        <p class="text-amber-500 text-sm mb-3">2023</p>
+                        <p class="text-gray-400 text-sm">Внедорожник класса люкс</p>
+                        <button class="mt-4 text-amber-500 text-sm uppercase tracking-widest hover:text-amber-400 transition-colors">Подробнее →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-24 px-6 bg-gradient-to-b from-black to-black/95 border-y border-amber-900/20">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                <div>
+                    <div class="text-5xl font-bold text-amber-500 mb-2">500+</div>
+                    <p class="text-gray-400 uppercase tracking-widest text-sm">Довольных клиентов</p>
+                </div>
+                <div>
+                    <div class="text-5xl font-bold text-amber-500 mb-2">15+</div>
+                    <p class="text-gray-400 uppercase tracking-widest text-sm">Лет опыта</p>
+                </div>
+                <div>
+                    <div class="text-5xl font-bold text-amber-500 mb-2">24/7</div>
+                    <p class="text-gray-400 uppercase tracking-widest text-sm">Техническая поддержка</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="py-24 px-6 bg-black">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl md:text-6xl font-bold mb-20 text-center tracking-tight">
+                ЧТО ГОВОРЯТ<span class="text-amber-500"> КЛИЕНТЫ</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 border border-amber-900/30 hover:border-amber-500 transition-colors">
+                    <div class="flex gap-1 mb-4">
+                        <span class="text-amber-500">★</span>
+                        <span class="text-amber-500">★</span>
+                        <span class="text-amber-500">★</span>
+                        <span class="text-amber-500">★</span>
+                        <span class="text-amber-500">★</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        "Превосходный сервис и профессионализм. Мой автомобиль получает лучший уход из возможных. Настоятельно рекомендую!"
+                    </p>
+                    <p class="font-bold">Иван Смирнов</p>
+                    <p class="text-amber-500 text-sm">владелец Ferrari</p>
+                </div>
+
+                <div class="p-8 border border-amber-900/30 hover:border-amber-500 transition-colors">
+                    <div class="flex gap-1 mb-4">
+                        <span class="text-amber-500">★</span>
+                        <span class="text-amber-500">★</span>
+                        <span class="text-amber-500">★</span>
+                        <span class="text-amber-500">★</span>
+                        <span class="text-amber-500">★</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        "Превосходный сервис и профессионализм. Мой автомобиль получает лучший уход из возможных. Настоятельно рекомендую!"
+                    </p>
+                    <p class="font-bold">Иван Смирнов</p>
+                    <p class="text-amber-500 text-sm">владелец Ferrari</p>
+                </div>
+
+                <div class="p-8 border border-amber-900/30 hover:border-amber-500 transition-colors">
+                    <div class="flex gap-1 mb-4">
+                        <span class="text-amber-500">★</span>
+                        <span class="text-amber-500">★</span>
+                        <span class="text-amber-500">★</span>
+                        <span class="text-amber-500">★</span>
+                        <span class="text-amber-500">★</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        "Превосходный сервис и профессионализм. Мой автомобиль получает лучший уход из возможных. Настоятельно рекомендую!"
+                    </p>
+                    <p class="font-bold">Иван Смирнов</p>
+                    <p class="text-amber-500 text-sm">владелец Ferrari</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-6 bg-gradient-to-b from-black via-black to-black/95">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl md:text-6xl font-bold mb-4 text-center tracking-tight">
+                СВЯЖИТЕСЬ<span class="text-amber-500"> С НАМИ</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-20 text-lg">
+                Мы готовы ответить на все ваши вопросы
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 border-2 border-amber-500 rounded-full flex items-center justify-center mb-6">
+                        <span class="text-2xl">📱</span>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Телефон</h3>
+                    <p class="text-gray-400">+7 (999) 123-45-67</p>
+                </div>
+
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 border-2 border-amber-500 rounded-full flex items-center justify-center mb-6">
+                        <span class="text-2xl">✉️</span>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Email</h3>
+                    <p class="text-gray-400">info@skysun.ru</p>
+                </div>
+
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 border-2 border-amber-500 rounded-full flex items-center justify-center mb-6">
+                        <span class="text-2xl">📍</span>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Адрес</h3>
+                    <p class="text-gray-400">Москва, ул. Петровка, 5</p>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="max-w-2xl mx-auto border border-amber-900/30 p-8 hover:border-amber-500 transition-colors">
+                <form class="space-y-6">
+                    <div>
+                        <label class="block text-sm uppercase tracking-widest mb-2">Ваше имя</label>
+                        <input
+                            type="text"
+                            class="w-full bg-black border border-amber-900/30 px-4 py-3 text-white placeholder-gray-600 focus:border-amber-500 focus:outline-none transition-colors"
+                            placeholder="Иван Иванов"
+                        />
+                    </div>
+                    <div>
+                        <label class="block text-sm uppercase tracking-widest mb-2">Email</label>
+                        <input
+                            type="email"
+                            class="w-full bg-black border border-amber-900/30 px-4 py-3 text-white placeholder-gray-600 focus:border-amber-500 focus:outline-none transition-colors"
+                            placeholder="ваш@email.com"
+                        />
+                    </div>
+                    <div>
+                        <label class="block text-sm uppercase tracking-widest mb-2">Сообщение</label>
+                        <textarea
+                            rows="4"
+                            class="w-full bg-black border border-amber-900/30 px-4 py-3 text-white placeholder-gray-600 focus:border-amber-500 focus:outline-none transition-colors resize-none"
+                            placeholder="Ваше сообщение..."
+                        ></textarea>
+                    </div>
+                    <button
+                        type="submit"
+                        class="w-full bg-amber-500 text-black font-bold py-4 uppercase tracking-widest hover:bg-amber-400 transition-colors"
+                    >
+                        Отправить
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-amber-900/20 py-8 px-6">
+        <div class="max-w-7xl mx-auto text-center text-gray-500 text-sm">
+            <p>© 2024 Skysun. Все права защищены.</p>
+            <p class="mt-2">Премиум услуги для люксовых автомобилей</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for car animation -->
+    <script>
+        const car = document.getElementById('car');
+        const speedLines = document.getElementById('speedLines');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const carPosition = Math.min(scrollY * 0.5, window.innerWidth - 100);
+            
+            car.style.left = carPosition + 'px';
+
+            // Add speed lines effect
+            if (carPosition > 50) {
+                const speedLine = document.createElement('div');
+                speedLine.className = 'absolute speed-line';
+                speedLine.style.left = (carPosition - 100) + 'px';
+                speedLine.style.top = '50%';
+                speedLine.style.height = '2px';
+                speedLine.style.backgroundColor = 'rgba(251, 146, 60, 0.3)';
+                
+                speedLines.appendChild(speedLine);
+
+                // Remove speed line after animation
+                setTimeout(() => speedLine.remove(), 500);
+            }
+        });
+    </script>
+
+</body>
+</html>
