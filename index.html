@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SKYSUN — Люксовые автомобили</title>
+<title>SKYSUN — Luxury Automobiles</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;700;900&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -17,7 +17,6 @@
   --text:#f5efe2;
   --muted:#9d9077;
   --stroke:rgba(212,162,74,.28);
-  --glass:rgba(212,162,74,.06);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -51,52 +50,58 @@ nav a{
 }
 nav a:hover{color:var(--gold-bright)}
 
-/* ---------- HERO SCROLL SCENE ---------- */
+/* ---------- SCROLL SCENE ---------- */
 #scene-wrap{height:300vh;position:relative}
 #scene{position:sticky;top:0;height:100vh;overflow:hidden;background:#000}
+
 #hero-img{
   position:absolute;inset:0;
-  background:url('rolls-royce.jpg') center 30%/cover no-repeat;
+  background-image:url('porsche-911.jpg');
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center 62%;   /* машина выше на экране (десктоп) */
   will-change:transform;
-  transform-origin:50% 42%;
+  transform-origin:50% 55%;
 }
 #hero-img::after{
   content:'';position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 90% 70% at 50% 45%, transparent 30%, rgba(10,8,5,.75) 100%),
-    linear-gradient(to top, rgba(10,8,5,.92) 0%, transparent 35%),
-    linear-gradient(to bottom, rgba(10,8,5,.6) 0%, transparent 25%);
+    radial-gradient(ellipse 95% 75% at 50% 55%, transparent 32%, rgba(10,8,5,.72) 100%),
+    linear-gradient(to top, rgba(10,8,5,.88) 0%, transparent 40%),
+    linear-gradient(to bottom, rgba(10,8,5,.65) 0%, transparent 28%);
 }
+
+/* текст в верхней трети, чтобы не закрывать машину */
 .hero-copy{
   position:absolute;inset:0;z-index:5;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-  text-align:center;padding:0 24px 15vh;pointer-events:none;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  text-align:center;padding:16vh 24px 0;pointer-events:none;
 }
 .hero-copy .eyebrow{
   font-size:11px;letter-spacing:.55em;text-transform:uppercase;
-  color:var(--gold-bright);margin-bottom:22px;font-weight:700;
+  color:var(--gold-bright);margin-bottom:20px;font-weight:700;
 }
 .hero-copy h1{
   font-family:'Unbounded',sans-serif;font-weight:900;
-  font-size:clamp(36px,7.5vw,104px);line-height:1.03;
-  text-shadow:0 10px 60px rgba(0,0,0,.9);
+  font-size:clamp(34px,7vw,96px);line-height:1.03;
+  text-shadow:0 10px 60px rgba(0,0,0,.92);
 }
 .hero-copy h1 .grad{
   background:linear-gradient(90deg,var(--gold-bright),var(--gold),#ffe9b8);
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 .hero-copy p{
-  margin-top:24px;color:#cdc2ab;font-size:clamp(14px,1.6vw,18px);
-  max-width:560px;font-weight:400;text-shadow:0 4px 24px rgba(0,0,0,.9);
+  margin-top:22px;color:#cdc2ab;font-size:clamp(14px,1.5vw,18px);
+  max-width:540px;font-weight:400;text-shadow:0 4px 24px rgba(0,0,0,.95);
 }
 .scroll-hint{
-  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:10px;
   color:var(--muted);font-size:10px;letter-spacing:.45em;text-transform:uppercase;
   z-index:6;
 }
 .scroll-hint .line{
-  width:1px;height:46px;overflow:hidden;position:relative;
+  width:1px;height:44px;overflow:hidden;position:relative;
   background:rgba(212,162,74,.18);
 }
 .scroll-hint .line::after{
@@ -106,34 +111,32 @@ nav a:hover{color:var(--gold-bright)}
 }
 @keyframes drop{to{top:100%}}
 
-/* золотая вспышка при "въезде" */
-#flash{
-  position:absolute;inset:0;z-index:8;pointer-events:none;opacity:0;
-  background:radial-gradient(circle at 50% 45%, rgba(255,240,200,.95) 0%, rgba(212,162,74,.85) 40%, transparent 75%);
-}
-
-/* второй кадр — крупный план (Bentley решётка = "вы у самой машины") */
-#close-img{
+/* переход в салон Porsche — плавно, без вспышки */
+#interior-img{
   position:absolute;inset:0;z-index:7;opacity:0;
-  background:url('bentley.jpg') center/cover no-repeat;
+  background:url('porsche-interior.jpg') center 45%/cover no-repeat;
   will-change:transform,opacity;
 }
-#close-img::after{
+#interior-img::after{
   content:'';position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 80% 65% at 50% 50%, transparent 25%, rgba(10,8,5,.8) 100%),
-    linear-gradient(to top, rgba(10,8,5,.95), transparent 40%);
+    radial-gradient(ellipse 85% 70% at 50% 50%, transparent 30%, rgba(10,8,5,.7) 100%),
+    linear-gradient(to bottom, rgba(10,8,5,.55) 0%, transparent 30%),
+    linear-gradient(to top, rgba(10,8,5,.9), transparent 45%);
 }
-.close-copy{
-  position:absolute;z-index:9;left:50%;bottom:16%;transform:translateX(-50%);
+.interior-copy{
+  position:absolute;z-index:9;left:50%;bottom:15%;transform:translateX(-50%);
   text-align:center;opacity:0;width:100%;padding:0 24px;
 }
-.close-copy h2{
+.interior-copy h2{
   font-family:'Unbounded',sans-serif;font-weight:700;
-  font-size:clamp(24px,4.4vw,54px);letter-spacing:.06em;
-  text-shadow:0 8px 40px rgba(0,0,0,.9);
+  font-size:clamp(24px,4.2vw,52px);letter-spacing:.06em;
+  text-shadow:0 8px 40px rgba(0,0,0,.95);
 }
-.close-copy p{color:var(--gold-bright);letter-spacing:.45em;font-size:12px;text-transform:uppercase;margin-top:16px;font-weight:600}
+.interior-copy p{
+  color:var(--gold-bright);letter-spacing:.45em;font-size:12px;
+  text-transform:uppercase;margin-top:16px;font-weight:600;
+}
 
 /* ---------- SECTIONS ---------- */
 section{position:relative;padding:130px 48px;max-width:1280px;margin:0 auto}
@@ -173,11 +176,11 @@ h2.sec-title .grad{
 .card h3{font-size:19px;font-weight:700;margin-bottom:14px;letter-spacing:.02em}
 .card p{color:var(--muted);font-size:15px;line-height:1.7}
 
-/* gallery with real photos */
+/* gallery */
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px}
 .g-item{
   position:relative;height:440px;border-radius:20px;overflow:hidden;
-  border:1px solid var(--stroke);cursor:pointer;
+  border:1px solid var(--stroke);cursor:pointer;background:#0d0b07;
   transition:transform .5s cubic-bezier(.16,1,.3,1), box-shadow .5s;
 }
 .g-item:hover{transform:translateY(-8px);box-shadow:0 34px 80px rgba(212,162,74,.22)}
@@ -185,11 +188,12 @@ h2.sec-title .grad{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   transition:transform .8s cubic-bezier(.16,1,.3,1);
 }
-.g-item:hover img{transform:scale(1.07)}
+.g-item.contain img{object-fit:contain;background:#0d0b07}
 .g-item .shade{
   position:absolute;inset:0;
   background:linear-gradient(to top, rgba(10,8,5,.94) 0%, transparent 55%);
 }
+.g-item:hover img{transform:scale(1.06)}
 .g-item .info{position:absolute;left:28px;right:28px;bottom:26px}
 .g-item h3{font-size:20px;font-weight:700}
 .g-item p{color:var(--gold-bright);font-size:13px;margin-top:7px;letter-spacing:.08em}
@@ -197,12 +201,12 @@ h2.sec-title .grad{
   position:absolute;top:22px;left:24px;font-size:10px;letter-spacing:.3em;
   color:var(--gold-bright);text-transform:uppercase;font-weight:700;
   background:rgba(10,8,5,.65);padding:8px 14px;border-radius:100px;
-  border:1px solid var(--stroke);backdrop-filter:blur(6px);
+  border:1px solid var(--stroke);backdrop-filter:blur(6px);z-index:2;
 }
 .g-item.wide{grid-column:span 2}
 @media(max-width:900px){.g-item.wide{grid-column:span 1}}
 
-/* stats strip */
+/* stats */
 .specs{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
   gap:2px;border-radius:22px;overflow:hidden;border:1px solid var(--stroke);
@@ -252,13 +256,18 @@ footer{
 }
 footer .logo{font-size:15px;display:block;margin-bottom:12px}
 
+/* ---------- MOBILE ---------- */
 @media(max-width:760px){
-  nav{padding:18px 22px}
-  nav ul{gap:16px}
-  nav a{font-size:10px}
-  section{padding:90px 22px}
+  nav{padding:18px 20px}
+  nav ul{gap:14px}
+  nav a{font-size:9px;letter-spacing:.15em}
+  .logo{font-size:16px}
+  /* на телефоне фото по центру */
+  #hero-img{background-position:center center}
+  .hero-copy{padding:14vh 20px 0}
+  section{padding:90px 20px}
   .contact-grid{grid-template-columns:1fr}
-  .g-item{height:380px}
+  .g-item{height:340px}
 }
 @media (prefers-reduced-motion: reduce){
   *{animation:none!important;transition:none!important}
@@ -270,33 +279,31 @@ footer .logo{font-size:15px;display:block;margin-bottom:12px}
 <nav>
   <div class="logo">SKYSUN</div>
   <ul>
-    <li><a href="#services">Услуги</a></li>
-    <li><a href="#gallery">Коллекция</a></li>
-    <li><a href="#contact">Контакт</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
-<!-- ============ SCROLL SCENE: приближение к Porsche 911 ============ -->
+<!-- ============ SCROLL SCENE ============ -->
 <div id="scene-wrap">
   <div id="scene">
     <div id="hero-img"></div>
 
     <div class="hero-copy" id="heroCopy">
-      <div class="eyebrow">Skysun · Люксовые автомобили</div>
-      <h1>ПРИБЛИЗЬСЯ<br><span class="grad">К МЕЧТЕ</span></h1>
-      <p>Porsche 911. Листайте вниз — и подойдите к нему вплотную.</p>
+      <div class="eyebrow">Skysun · Luxury Automobiles</div>
+      <h1>GET CLOSER<br><span class="grad">TO THE DREAM</span></h1>
+      <p>Porsche 911. Scroll down — and step inside.</p>
     </div>
 
-    <div id="flash"></div>
-
-    <div id="close-img"></div>
-    <div class="close-copy" id="closeCopy">
-      <h2>ВЫ РЯДОМ</h2>
-      <p>Осталось сесть за руль</p>
+    <div id="interior-img"></div>
+    <div class="interior-copy" id="interiorCopy">
+      <h2>YOU'RE INSIDE</h2>
+      <p>Welcome to Skysun</p>
     </div>
 
     <div class="scroll-hint" id="scrollHint">
-      <span>Листайте</span>
+      <span>Scroll</span>
       <div class="line"></div>
     </div>
   </div>
@@ -304,28 +311,28 @@ footer .logo{font-size:15px;display:block;margin-bottom:12px}
 
 <!-- ============ SERVICES ============ -->
 <section id="services">
-  <div class="sec-label reveal">Что мы делаем</div>
-  <h2 class="sec-title reveal">Полный цикл владения<br><span class="grad">люксовым автомобилем</span></h2>
+  <div class="sec-label reveal">What we do</div>
+  <h2 class="sec-title reveal">The complete ownership<br><span class="grad">experience</span></h2>
   <div class="cards">
     <div class="card reveal">
       <div class="num">01</div>
-      <h3>Подбор и продажа</h3>
-      <p>Эксклюзивные автомобили из закрытых мировых коллекций — под ваш запрос и характер.</p>
+      <h3>Sales &amp; Sourcing</h3>
+      <p>Exclusive automobiles from private collections worldwide — matched to your taste and character.</p>
     </div>
     <div class="card reveal">
       <div class="num">02</div>
-      <h3>Консультация</h3>
-      <p>Персональный эксперт сопровождает сделку от первого звонка до передачи ключей.</p>
+      <h3>Consultation</h3>
+      <p>A dedicated expert guides you from the first call to the moment you receive the keys.</p>
     </div>
     <div class="card reveal">
       <div class="num">03</div>
-      <h3>Сервис</h3>
-      <p>Сертифицированное обслуживание спорткаров с оригинальными деталями и диагностикой.</p>
+      <h3>Service</h3>
+      <p>Certified maintenance for supercars with genuine parts and full diagnostics.</p>
     </div>
     <div class="card reveal">
       <div class="num">04</div>
-      <h3>Детейлинг</h3>
-      <p>Керамика, полировка, защита кузова — автомобиль выглядит лучше, чем из салона.</p>
+      <h3>Detailing</h3>
+      <p>Ceramic coating, paint correction and protection — your car looks better than showroom new.</p>
     </div>
   </div>
 </section>
@@ -333,52 +340,52 @@ footer .logo{font-size:15px;display:block;margin-bottom:12px}
 <!-- ============ STATS ============ -->
 <section>
   <div class="specs reveal">
-    <div class="spec"><div class="val">500+</div><div class="lbl">клиентов</div></div>
-    <div class="spec"><div class="val">15</div><div class="lbl">лет опыта</div></div>
-    <div class="spec"><div class="val">24/7</div><div class="lbl">поддержка</div></div>
-    <div class="spec"><div class="val">UAE</div><div class="lbl">шоурум</div></div>
+    <div class="spec"><div class="val">500+</div><div class="lbl">Clients</div></div>
+    <div class="spec"><div class="val">15</div><div class="lbl">Years</div></div>
+    <div class="spec"><div class="val">24/7</div><div class="lbl">Support</div></div>
+    <div class="spec"><div class="val">UAE</div><div class="lbl">Showroom</div></div>
   </div>
 </section>
 
-<!-- ============ GALLERY ============ -->
-<section id="gallery">
-  <div class="sec-label reveal">Коллекция</div>
-  <h2 class="sec-title reveal">Автомобили<br><span class="grad">в наличии</span></h2>
+<!-- ============ COLLECTION ============ -->
+<section id="collection">
+  <div class="sec-label reveal">Collection</div>
+  <h2 class="sec-title reveal">Available<br><span class="grad">now</span></h2>
   <div class="gallery">
     <div class="g-item wide reveal">
-      <img src="rolls-royce.jpg" alt="Porsche 911" loading="lazy">
+      <img src="porsche-911.jpg" alt="Porsche 911" loading="lazy">
       <div class="shade"></div>
-      <div class="tag">Флагман</div>
+      <div class="tag">Flagship</div>
       <div class="info">
         <h3>Porsche 911</h3>
-        <p>Спорткар · Ночная версия · В наличии</p>
+        <p>Sports car · Night edition · In stock</p>
       </div>
     </div>
     <div class="g-item reveal">
-      <img src="porsche-911.jpg" alt="Lamborghini Huracan" loading="lazy">
+      <img src="lamborghini.jpg" alt="Lamborghini Huracan" loading="lazy">
       <div class="shade"></div>
-      <div class="tag">Суперкар</div>
+      <div class="tag">Supercar</div>
       <div class="info">
-        <h3>Lamborghini Huracan</h3>
-        <p>Matte Black · Под заказ</p>
+        <h3>Lamborghini Huracán</h3>
+        <p>Matte Black · On request</p>
       </div>
     </div>
     <div class="g-item reveal">
-      <img src="lamborghini.jpg" alt="Rolls-Royce Phantom" loading="lazy">
+      <img src="rolls-royce.jpg" alt="Rolls-Royce Phantom" loading="lazy">
       <div class="shade"></div>
-      <div class="tag">Люкс</div>
+      <div class="tag">Luxury</div>
       <div class="info">
         <h3>Rolls-Royce Phantom</h3>
-        <p>Представительский · В наличии</p>
+        <p>Chauffeur class · In stock</p>
       </div>
     </div>
-    <div class="g-item wide reveal">
+    <div class="g-item wide contain reveal">
       <img src="bentley.jpg" alt="Bentley Flying Spur" loading="lazy">
       <div class="shade"></div>
-      <div class="tag">Гранд-турер</div>
+      <div class="tag">Grand Tourer</div>
       <div class="info">
         <h3>Bentley Flying Spur</h3>
-        <p>W12 · Индивидуальная комплектация</p>
+        <p>W12 · Bespoke specification</p>
       </div>
     </div>
   </div>
@@ -386,13 +393,13 @@ footer .logo{font-size:15px;display:block;margin-bottom:12px}
 
 <!-- ============ CONTACT ============ -->
 <section id="contact">
-  <div class="sec-label reveal">Связаться</div>
-  <h2 class="sec-title reveal">Запишитесь<br><span class="grad">на тест-драйв</span></h2>
+  <div class="sec-label reveal">Get in touch</div>
+  <h2 class="sec-title reveal">Book your<br><span class="grad">consultation</span></h2>
   <div class="contact-grid">
     <div class="contact-info reveal">
       <div class="row">
         <div class="ico">📞</div>
-        <div><h4>Телефон</h4><p>+971 (00) 000-00-00</p></div>
+        <div><h4>Phone</h4><p>+971 (00) 000-00-00</p></div>
       </div>
       <div class="row">
         <div class="ico">✉️</div>
@@ -400,30 +407,29 @@ footer .logo{font-size:15px;display:block;margin-bottom:12px}
       </div>
       <div class="row">
         <div class="ico">📍</div>
-        <div><h4>Шоурум</h4><p>Dubai, UAE</p></div>
+        <div><h4>Showroom</h4><p>Dubai, UAE</p></div>
       </div>
     </div>
-    <form class="reveal" onsubmit="event.preventDefault();this.querySelector('button').textContent='Отправлено ✓'">
-      <input type="text" placeholder="Ваше имя" required>
-      <input type="tel" placeholder="Телефон" required>
-      <textarea placeholder="Какой автомобиль вас интересует?"></textarea>
-      <button type="submit">Отправить заявку</button>
+    <form class="reveal" onsubmit="event.preventDefault();this.querySelector('button').textContent='Sent ✓'">
+      <input type="text" placeholder="Your name" required>
+      <input type="tel" placeholder="Phone number" required>
+      <textarea placeholder="Which automobile are you interested in?"></textarea>
+      <button type="submit">Request consultation</button>
     </form>
   </div>
 </section>
 
 <footer>
   <span class="logo">SKYSUN</span>
-  © 2026 Skysun. Люксовые автомобили и премиум-сервис.
+  © 2026 Skysun. Luxury automobiles and premium service.
 </footer>
 
 <script>
 const wrap=document.getElementById('scene-wrap');
 const heroImg=document.getElementById('hero-img');
 const heroCopy=document.getElementById('heroCopy');
-const flash=document.getElementById('flash');
-const closeImg=document.getElementById('close-img');
-const closeCopy=document.getElementById('closeCopy');
+const interiorImg=document.getElementById('interior-img');
+const interiorCopy=document.getElementById('interiorCopy');
 const scrollHint=document.getElementById('scrollHint');
 
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -434,31 +440,27 @@ function onScroll(){
   const total=wrap.offsetHeight-window.innerHeight;
   const p=clamp(-rect.top/total,0,1);
 
-  /* фаза 1 (0–0.5): камера приближается к Porsche */
-  const zoomP=ease(clamp(p/0.5,0,1));
-  heroImg.style.transform=`scale(${1+zoomP*0.9})`;   // 1 → 1.9
+  /* фаза 1 (0–0.55): камера приближается к Porsche */
+  const zoomP=ease(clamp(p/0.55,0,1));
+  heroImg.style.transform=`scale(${1+zoomP*0.75})`;
 
-  /* текст уходит */
-  heroCopy.style.opacity=clamp(1-p/0.22,0,1);
-  heroCopy.style.transform=`translateY(${p*140}px)`;
+  heroCopy.style.opacity=clamp(1-p/0.24,0,1);
+  heroCopy.style.transform=`translateY(${-p*90}px)`;
   scrollHint.style.opacity=clamp(1-p/0.1,0,1);
 
-  /* фаза 2 (0.45–0.58): золотая вспышка */
-  const fl=clamp((p-0.45)/0.08,0,1);
-  flash.style.opacity= fl<1 ? ease(fl)*.95 : clamp(1-(p-0.53)/0.09,0,1)*.95;
+  /* фаза 2 (0.42–1): плавный переход в салон, без вспышки */
+  const inP=ease(clamp((p-0.42)/0.3,0,1));
+  interiorImg.style.opacity=inP;
+  interiorImg.style.transform=`scale(${1.18-0.18*inP})`;
 
-  /* фаза 3 (0.5–1): крупный план — вы у машины */
-  const inP=ease(clamp((p-0.5)/0.22,0,1));
-  closeImg.style.opacity=inP;
-  closeImg.style.transform=`scale(${1.22-0.22*inP})`;
-  closeCopy.style.opacity=ease(clamp((p-0.72)/0.16,0,1));
-  closeCopy.style.transform=
-    `translateX(-50%) translateY(${(1-clamp((p-0.72)/0.16,0,1))*34}px)`;
+  const copyP=clamp((p-0.72)/0.18,0,1);
+  interiorCopy.style.opacity=ease(copyP);
+  interiorCopy.style.transform=`translateX(-50%) translateY(${(1-copyP)*34}px)`;
 }
 document.addEventListener('scroll',onScroll,{passive:true});
+window.addEventListener('resize',onScroll);
 onScroll();
 
-/* reveal on scroll */
 const io=new IntersectionObserver(es=>{
   es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
 },{threshold:.15});
