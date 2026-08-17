@@ -56,7 +56,7 @@ nav a:hover{color:var(--gold-bright)}
 
 #hero-img{
   position:absolute;inset:0;
-  background-image:url('porsche-911.jpg');
+  background-image:url('car-porsche.jpg');
   background-size:cover;
   background-repeat:no-repeat;
   background-position:center 62%;   /* машина выше на экране (десктоп) */
@@ -114,7 +114,7 @@ nav a:hover{color:var(--gold-bright)}
 /* переход в салон Porsche — плавно, без вспышки */
 #interior-img{
   position:absolute;inset:0;z-index:7;opacity:0;
-  background:url('porsche-interior.jpg') center 45%/cover no-repeat;
+  background:url('porsche-cabin.jpg') center 45%/cover no-repeat;
   will-change:transform,opacity;
 }
 #interior-img::after{
@@ -353,7 +353,7 @@ footer .logo{font-size:15px;display:block;margin-bottom:12px}
   <h2 class="sec-title reveal">Available<br><span class="grad">now</span></h2>
   <div class="gallery">
     <div class="g-item wide reveal">
-      <img src="porsche-911.jpg" alt="Porsche 911" loading="lazy">
+      <img src="car-porsche.jpg" alt="Porsche 911" loading="lazy">
       <div class="shade"></div>
       <div class="tag">Flagship</div>
       <div class="info">
@@ -362,7 +362,7 @@ footer .logo{font-size:15px;display:block;margin-bottom:12px}
       </div>
     </div>
     <div class="g-item reveal">
-      <img src="lamborghini.jpg" alt="Lamborghini Huracan" loading="lazy">
+      <img src="car-lambo.jpg" alt="Lamborghini Huracan" loading="lazy">
       <div class="shade"></div>
       <div class="tag">Supercar</div>
       <div class="info">
@@ -371,7 +371,7 @@ footer .logo{font-size:15px;display:block;margin-bottom:12px}
       </div>
     </div>
     <div class="g-item reveal">
-      <img src="rolls-royce.jpg" alt="Rolls-Royce Phantom" loading="lazy">
+      <img src="car-rolls.jpg" alt="Rolls-Royce Phantom" loading="lazy">
       <div class="shade"></div>
       <div class="tag">Luxury</div>
       <div class="info">
@@ -380,7 +380,7 @@ footer .logo{font-size:15px;display:block;margin-bottom:12px}
       </div>
     </div>
     <div class="g-item wide contain reveal">
-      <img src="bentley.jpg" alt="Bentley Flying Spur" loading="lazy">
+      <img src="car-bentley.jpg" alt="Bentley Flying Spur" loading="lazy">
       <div class="shade"></div>
       <div class="tag">Grand Tourer</div>
       <div class="info">
@@ -403,18 +403,20 @@ footer .logo{font-size:15px;display:block;margin-bottom:12px}
       </div>
       <div class="row">
         <div class="ico">✉️</div>
-        <div><h4>Email</h4><p>info@skysun-uae.ae</p></div>
+        <div><h4>Email</h4><p>orders@skysun-uae.ae</p></div>
       </div>
       <div class="row">
         <div class="ico">📍</div>
         <div><h4>Showroom</h4><p>Dubai, UAE</p></div>
       </div>
     </div>
-    <form class="reveal" onsubmit="event.preventDefault();this.querySelector('button').textContent='Sent ✓'">
-      <input type="text" placeholder="Your name" required>
-      <input type="tel" placeholder="Phone number" required>
-      <textarea placeholder="Which automobile are you interested in?"></textarea>
+    <form class="reveal" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="text" name="name" placeholder="Your name" required>
+      <input type="email" name="email" placeholder="Your email" required>
+      <input type="tel" name="phone" placeholder="Phone number" required>
+      <textarea name="message" placeholder="Which automobile are you interested in?"></textarea>
       <button type="submit">Request consultation</button>
+      <p id="formNote" style="display:none;color:var(--gold-bright);font-size:14px;text-align:center"></p>
     </form>
   </div>
 </section>
@@ -460,6 +462,36 @@ function onScroll(){
 document.addEventListener('scroll',onScroll,{passive:true});
 window.addEventListener('resize',onScroll);
 onScroll();
+
+/* form submit */
+const form=document.getElementById('contactForm');
+const note=document.getElementById('formNote');
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const btn=form.querySelector('button');
+  btn.textContent='Sending...';
+  try{
+    const res=await fetch(form.action,{
+      method:'POST',
+      body:new FormData(form),
+      headers:{'Accept':'application/json'}
+    });
+    if(res.ok){
+      btn.textContent='Sent ✓';
+      note.style.display='block';
+      note.textContent='Thank you! We will contact you shortly.';
+      form.reset();
+    }else{
+      btn.textContent='Request consultation';
+      note.style.display='block';
+      note.textContent='Something went wrong. Please email orders@skysun-uae.ae';
+    }
+  }catch(err){
+    btn.textContent='Request consultation';
+    note.style.display='block';
+    note.textContent='Something went wrong. Please email orders@skysun-uae.ae';
+  }
+});
 
 const io=new IntersectionObserver(es=>{
   es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
