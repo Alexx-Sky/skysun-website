@@ -265,6 +265,22 @@ footer .logo{font-size:15px;display:block;margin-bottom:12px}
   /* на телефоне фото по центру */
   #hero-img{background-position:center center}
   .hero-copy{padding:14vh 20px 0}
+
+  /* САЛОН: показываем кадр целиком, без обрезки краёв */
+  #interior-img{
+    background-size:contain;
+    background-position:center 42%;
+    background-color:#0a0805;
+  }
+  #interior-img::after{
+    background:
+      linear-gradient(to bottom, rgba(10,8,5,.8) 0%, transparent 22%),
+      linear-gradient(to top, rgba(10,8,5,.92) 0%, transparent 34%);
+  }
+  .interior-copy{bottom:12%}
+  .interior-copy h2{font-size:28px}
+  .interior-copy p{font-size:10px;letter-spacing:.3em}
+
   section{padding:90px 20px}
   .contact-grid{grid-template-columns:1fr}
   .g-item{height:340px}
@@ -444,16 +460,20 @@ function onScroll(){
 
   /* фаза 1 (0–0.55): камера приближается к Porsche */
   const zoomP=ease(clamp(p/0.55,0,1));
-  heroImg.style.transform=`scale(${1+zoomP*0.75})`;
+  const heroZoom=window.matchMedia('(max-width:760px)').matches?0.35:0.75;
+  heroImg.style.transform=`scale(${1+zoomP*heroZoom})`;
 
   heroCopy.style.opacity=clamp(1-p/0.24,0,1);
   heroCopy.style.transform=`translateY(${-p*90}px)`;
   scrollHint.style.opacity=clamp(1-p/0.1,0,1);
 
   /* фаза 2 (0.42–1): плавный переход в салон, без вспышки */
+  const isMobile=window.matchMedia('(max-width:760px)').matches;
   const inP=ease(clamp((p-0.42)/0.3,0,1));
   interiorImg.style.opacity=inP;
-  interiorImg.style.transform=`scale(${1.18-0.18*inP})`;
+  /* на телефоне без зума — иначе кадр "плывёт" и обрезаются края */
+  const zoomStart=isMobile?1.04:1.18;
+  interiorImg.style.transform=`scale(${zoomStart-(zoomStart-1)*inP})`;
 
   const copyP=clamp((p-0.72)/0.18,0,1);
   interiorCopy.style.opacity=ease(copyP);
