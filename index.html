@@ -204,6 +204,46 @@ h2.sec-title .grad{
   border:1px solid var(--stroke);backdrop-filter:blur(6px);z-index:2;
 }
 .g-item.wide{grid-column:span 2}
+
+/* ---- слайдер внутри карточки ---- */
+.g-item.slider img{opacity:0;transition:opacity .55s ease}
+.g-item.slider img.active{opacity:1}
+.g-item.slider:hover img{transform:none}
+.sl-btn{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:4;
+  width:42px;height:42px;border-radius:50%;cursor:pointer;
+  background:rgba(10,8,5,.62);border:1px solid var(--stroke);
+  backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold-bright);font-size:19px;line-height:1;
+  padding:0;letter-spacing:0;font-family:'Manrope',sans-serif;font-weight:400;
+  opacity:0;transition:opacity .35s, background .3s, transform .3s;
+}
+.g-item.slider:hover .sl-btn{opacity:1}
+.sl-btn:hover{background:rgba(212,162,74,.28);transform:translateY(-50%) scale(1.08);box-shadow:none}
+.sl-prev{left:16px}
+.sl-next{right:16px}
+.sl-dots{
+  position:absolute;bottom:96px;left:0;right:0;z-index:4;
+  display:flex;gap:8px;justify-content:center;
+}
+.sl-dot{
+  width:7px;height:7px;border-radius:50%;cursor:pointer;
+  background:rgba(245,239,226,.3);transition:background .3s, transform .3s;
+}
+.sl-dot.active{background:var(--gold-bright);transform:scale(1.35)}
+.sl-count{
+  position:absolute;top:22px;right:24px;z-index:4;
+  font-size:11px;letter-spacing:.15em;color:var(--gold-bright);
+  background:rgba(10,8,5,.65);padding:8px 13px;border-radius:100px;
+  border:1px solid var(--stroke);backdrop-filter:blur(6px);
+}
+@media(max-width:760px){
+  .sl-btn{opacity:1;width:38px;height:38px}
+  .sl-prev{left:10px}
+  .sl-next{right:10px}
+  .sl-dots{bottom:88px}
+}
 @media(max-width:900px){.g-item.wide{grid-column:span 1}}
 
 /* stats */
@@ -395,8 +435,18 @@ footer .logo{font-size:15px;display:block;margin-bottom:12px}
         <p>Chauffeur class · In stock</p>
       </div>
     </div>
-    <div class="g-item wide contain reveal">
-      <img src="car-bentley.jpg" alt="Bentley Flying Spur" loading="lazy">
+    <div class="g-item wide contain slider reveal">
+      <img src="bentley-1.jpg" alt="Bentley Flying Spur" class="active">
+      <img src="bentley-2.jpg" alt="Bentley Flying Spur side" loading="lazy">
+      <img src="bentley-3.jpg" alt="Bentley Flying Spur rear" loading="lazy">
+      <img src="bentley-4.jpg" alt="Bentley Flying Spur front" loading="lazy">
+      <img src="bentley-5.jpg" alt="Bentley Flying Spur interior" loading="lazy">
+      <img src="bentley-6.jpg" alt="Bentley Flying Spur dashboard" loading="lazy">
+      <img src="bentley-7.jpg" alt="Bentley Flying Spur rear seats" loading="lazy">
+      <button class="sl-btn sl-prev" aria-label="Previous photo">‹</button>
+      <button class="sl-btn sl-next" aria-label="Next photo">›</button>
+      <div class="sl-dots"></div>
+      <div class="sl-count"></div>
       <div class="shade"></div>
       <div class="tag">Grand Tourer</div>
       <div class="info">
@@ -415,19 +465,18 @@ footer .logo{font-size:15px;display:block;margin-bottom:12px}
     <div class="contact-info reveal">
       <div class="row">
         <div class="ico">📞</div>
-       <div><h4>Phone</h4><p><a href="tel:+971582916992" style="color:inherit;text-decoration:none">+971 58 291 6992</a></p></div>
+        <div><h4>Phone</h4><p><a href="tel:+971582916992" style="color:inherit;text-decoration:none">+971 58 291 6992</a></p></div>
       </div>
       <div class="row">
         <div class="ico">✉️</div>
-        <div><h4>Email</h4><p>orders@skysun-uae.ae</p></div>
+        <div><h4>Email</h4><p><a href="mailto:orders@skysun-uae.ae" style="color:inherit;text-decoration:none">orders@skysun-uae.ae</a></p></div>
       </div>
       <div class="row">
         <div class="ico">📍</div>
         <div><h4>Showroom</h4><p>Dubai, UAE</p></div>
       </div>
     </div>
-    <form class="reveal" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="7caf7f20-ecde-4e31-bac2-fc00cfc8b5c5">
+    <form class="reveal" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
       <input type="text" name="name" placeholder="Your name" required>
       <input type="email" name="email" placeholder="Your email" required>
       <input type="tel" name="phone" placeholder="Phone number" required>
@@ -512,6 +561,43 @@ form.addEventListener('submit',async e=>{
     note.style.display='block';
     note.textContent='Something went wrong. Please email orders@skysun-uae.ae';
   }
+});
+
+/* ---- слайдеры в карточках ---- */
+document.querySelectorAll('.g-item.slider').forEach(box=>{
+  const imgs=[...box.querySelectorAll('img')];
+  const dotsBox=box.querySelector('.sl-dots');
+  const counter=box.querySelector('.sl-count');
+  let i=0;
+
+  imgs.forEach((_,n)=>{
+    const d=document.createElement('span');
+    d.className='sl-dot'+(n===0?' active':'');
+    d.addEventListener('click',e=>{e.stopPropagation();go(n)});
+    dotsBox.appendChild(d);
+  });
+  const dots=[...dotsBox.children];
+
+  function go(n){
+    i=(n+imgs.length)%imgs.length;
+    imgs.forEach((im,k)=>im.classList.toggle('active',k===i));
+    dots.forEach((d,k)=>d.classList.toggle('active',k===i));
+    counter.textContent=(i+1)+' / '+imgs.length;
+  }
+  go(0);
+
+  box.querySelector('.sl-prev').addEventListener('click',e=>{e.stopPropagation();go(i-1)});
+  box.querySelector('.sl-next').addEventListener('click',e=>{e.stopPropagation();go(i+1)});
+
+  /* свайп на телефоне */
+  let x0=null;
+  box.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});
+  box.addEventListener('touchend',e=>{
+    if(x0===null)return;
+    const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>45) go(dx<0?i+1:i-1);
+    x0=null;
+  },{passive:true});
 });
 
 const io=new IntersectionObserver(es=>{
